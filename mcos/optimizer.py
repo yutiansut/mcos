@@ -6,7 +6,8 @@ from typing import Dict, List
 import numpy as np
 import pandas as pd
 import scipy.cluster.hierarchy as sch
-from numpy.linalg import inv, pinv
+from numpy.linalg import inv, pinv  
+#Compute the (multiplicative) inverse of a matrix.
 from pypfopt.efficient_frontier import EfficientFrontier
 from scipy.optimize import minimize
 from sklearn.cluster import KMeans

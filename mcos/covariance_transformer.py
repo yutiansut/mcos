@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Tuple
 import numpy as np
 from numpy import linalg
 from sklearn.neighbors import KernelDensity
@@ -96,7 +97,7 @@ class DeNoiserCovarianceTransformer(AbstractCovarianceTransformer):
         de_noised_covariance_matrix = corr_to_cov(correlation_matrix, np.diag(cov) ** .5)
         return de_noised_covariance_matrix
 
-    def _get_PCA(self, matrix: np.array) -> (np.array, np.array):
+    def _get_PCA(self, matrix: np.array) -> Tuple[np.array, np.array]:
         """
         Gets eigenvalues and eigenvectors from a Hermitian matrix
         :param matrix: a Hermitian matrix

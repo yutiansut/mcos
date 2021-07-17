@@ -1,12 +1,12 @@
 import numpy as np
 from abc import abstractmethod, ABC
 from sklearn.covariance import LedoitWolf
-
+from typing import Tuple
 
 class AbstractObservationSimulator(ABC):
 
     @abstractmethod
-    def simulate(self) -> (np.array, np.array):
+    def simulate(self) -> Tuple[np.array, np.array]:
         """
         Draws empirical means and covariances. See section 4.1 of the "A Robust Estimator of the Efficient Frontier"
         paper.
@@ -23,7 +23,7 @@ class MuCovLedoitWolfObservationSimulator(AbstractObservationSimulator):
         self.cov = cov
         self.n_observations = n_observations
 
-    def simulate(self) -> (np.array, np.array):
+    def simulate(self) -> Tuple[np.array, np.array]:
         x = np.random.multivariate_normal(self.mu.flatten(), self.cov, size=self.n_observations)
         return x.mean(axis=0).reshape(-1, 1), LedoitWolf().fit(x).covariance_
 
@@ -35,7 +35,7 @@ class MuCovObservationSimulator(AbstractObservationSimulator):
         self.cov = cov
         self.n_observations = n_observations
 
-    def simulate(self) -> (np.array, np.array):
+    def simulate(self) -> Tuple[np.array, np.array]:
         x = np.random.multivariate_normal(self.mu.flatten(), self.cov, size=self.n_observations)
         return x.mean(axis=0).reshape(-1, 1), np.cov(x, rowvar=False)
 
@@ -47,7 +47,7 @@ class MuCovJackknifeObservationSimulator(AbstractObservationSimulator):
         self.cov = cov
         self.n_observations = n_observations
 
-    def simulate(self) -> (np.array, np.array):
+    def simulate(self) -> Tuple[np.array, np.array]:
         x = np.random.multivariate_normal(self.mu.flatten(), self.cov, size=self.n_observations)
 
         idx = np.arange(len(x))
